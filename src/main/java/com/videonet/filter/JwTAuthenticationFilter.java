@@ -1,6 +1,6 @@
 package com.videonet.filter;
 
-import com.videonet.comm.GrantedAuthorityImpl;
+import com.videonet.security.GrantedAuthorityImpl;
 import com.videonet.util.JwtUtil;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;

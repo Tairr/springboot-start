@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.videonet.comm.aop.LoggerAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,6 +39,9 @@ public class SysAccountController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	@Autowired
+	private DruidDataSource druidDataSource;
+
 	
 	/**
 	 * 列表
@@ -51,7 +55,8 @@ public class SysAccountController {
 		int total = sysAccountService.queryTotal(query);
 		
 		PageUtils pageUtil = new PageUtils(sysAccountList, total, query.getLimit(), query.getPage());
-		
+		System.out.println("druidDataSource.properties:"+druidDataSource.getProperties());
+		System.out.println("druidDataSource.filters:"+druidDataSource.getFilterClasses());
 		return ReturnMap.ok().put("page", pageUtil);
 	}
 	

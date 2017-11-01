@@ -139,7 +139,7 @@ public interface ISysResourceDao  {
             +" LEFT JOIN sys_role_authority roa ON acr.ROLE_ID=roa.ROLE_ID "
             +" LEFT JOIN sys_resource_authority  rea on roa.AUTHORITY_ID=rea.AUTHORITY_ID "
             +" LEFT JOIN sys_resource res ON rea.RESOURCE_ID = res.ID "
-            +" WHERE ac.USERNAME= #{username} ")
+            +" WHERE ac.USERNAME= #{username} and res.ID is not null ")
     List<SysResource> getAccountAuthorities(String username);
 	
 }
