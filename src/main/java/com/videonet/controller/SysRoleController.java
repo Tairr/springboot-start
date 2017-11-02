@@ -3,6 +3,7 @@ package com.videonet.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.videonet.service.TblDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,8 +30,12 @@ import com.videonet.util.ReturnMap;
 @RestController
 @RequestMapping("/sysrole")
 public class SysRoleController {
+
 	@Autowired
 	private SysRoleService sysRoleService;
+	@Autowired
+	private TblDomainService domainService;
+
 	
 	/**
 	 * 列表
@@ -47,7 +52,32 @@ public class SysRoleController {
 		
 		return ReturnMap.ok().put("page", pageUtil);
 	}
-	
+
+	/**
+	 * 列表-包含角色权限信息
+	 */
+	@RequestMapping("/listrta")
+	public ReturnMap listRta(@RequestParam Map<String, Object> params){
+		//查询列表数据
+		Query query = new Query(params);
+
+		List<SysRole> sysRoleList = sysRoleService.queryList(query);
+		int total = sysRoleService.queryTotal(query);
+
+		PageUtils pageUtil = new PageUtils(sysRoleList, total, query.getLimit(), query.getPage());
+
+		return ReturnMap.ok().put("page", pageUtil);
+	}
+
+	/**
+	 * 列表-包含角色权限信息
+	 */
+	@RequestMapping("/listTree")
+	public ReturnMap getCameraTree(@RequestParam Map<String, Object> params){
+		//查询列表数据
+
+		return ReturnMap.ok().put("tree", domainService.listTree());
+	}
 	
 	/**
 	 * 信息

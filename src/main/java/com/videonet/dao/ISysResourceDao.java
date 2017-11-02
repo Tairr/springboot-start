@@ -4,10 +4,7 @@ import com.videonet.domain.SysAuthority;
 import com.videonet.domain.SysResource;
 import com.videonet.comm.base.BaseModel;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -134,12 +131,15 @@ public interface ISysResourceDao  {
             +"</script>")
     int queryTotal(Map<String, Object> map);
 
-    @Select("SELECT res.* from sys_account ac   "
+    @Select("SELECT res.*,ac.username from sys_account ac   "
             +" LEFT JOIN sys_account_role acr  ON ac.id=acr.ACCOUNT_ID "
             +" LEFT JOIN sys_role_authority roa ON acr.ROLE_ID=roa.ROLE_ID "
             +" LEFT JOIN sys_resource_authority  rea on roa.AUTHORITY_ID=rea.AUTHORITY_ID "
             +" LEFT JOIN sys_resource res ON rea.RESOURCE_ID = res.ID "
             +" WHERE ac.USERNAME= #{username} and res.ID is not null ")
+    @Results({
+            @Result(column = "username",property = "account.username")
+    })
     List<SysResource> getAccountAuthorities(String username);
 	
 }

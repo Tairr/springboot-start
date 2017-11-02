@@ -41,6 +41,15 @@ public class SysResource  {
 	//
 	private Integer orderNum;
 
+	private SysAccount account;
+
+	public SysAccount getAccount() {
+		return account;
+	}
+
+	public void setAccount(SysAccount account) {
+		this.account = account;
+	}
 
 	/**
 	 * 设置：

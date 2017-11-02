@@ -2,6 +2,7 @@ package com.videonet.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -25,6 +26,17 @@ public class SysRole  {
 	private String ifUse;
 	//
 	private Integer orderNum;
+
+
+	public List<SysAuthority> getAuthorityList() {
+		return authorityList;
+	}
+
+	public void setAuthorityList(List<SysAuthority> authorityList) {
+		this.authorityList = authorityList;
+	}
+
+	private List<SysAuthority> authorityList;
 
 
 	/**

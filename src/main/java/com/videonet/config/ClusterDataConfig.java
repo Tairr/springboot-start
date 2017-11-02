@@ -3,15 +3,10 @@ package com.videonet.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.aop.Advisor;
-import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
-import org.springframework.aop.support.DefaultPointcutAdvisor;
-import org.springframework.aop.support.JdkRegexpMethodPointcut;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -24,23 +19,21 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 /**
- * Created by tangjinhui on 2017/10/31.
+ * @author tangjinhui
+ * @date 2017/11/2
  */
-
 @Configuration
-@MapperScan(basePackages ="com.videonet.dao" , sqlSessionTemplateRef  = "masterSqlSessionTemplate")
-public class DruidConfiguration {
+@MapperScan(basePackages ="com.videonet.cdao", sqlSessionTemplateRef  = "clusterSqlSessionTemplate" )
+public class ClusterDataConfig {
 
-    @Bean(name="masterDataSource")
-    @Primary
-    @ConfigurationProperties(prefix = "master.datasource")
+    @Bean(name="clusterDataSource")
+    @ConfigurationProperties(prefix = "cluster.datasource")
     public DruidDataSource dataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         return dataSource;
     }
 
-    @Bean(name="masterRegistrationBean")
-    @Primary
+    @Bean(name="clusterRegistrationBean")
     public ServletRegistrationBean druidStatViewServlet(){
         ServletRegistrationBean  servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(),"/druid/*");
 
@@ -54,8 +47,7 @@ public class DruidConfiguration {
         return servletRegistrationBean;
     }
 
-    @Bean(name="masterRegistrationBean")
-    @Primary
+    @Bean(name="clusterRegistrationBean")
     public FilterRegistrationBean druidStatFilter(){
 
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
@@ -70,25 +62,22 @@ public class DruidConfiguration {
         return filterRegistrationBean;
     }
 
-    @Bean(name = "masterSqlSessionFactory")
-    @Primary
-    public SqlSessionFactoryBean sqlSessionFactoryBean(@Qualifier("masterDataSource")DruidDataSource dataSource) throws Exception {
+    @Bean(name = "clusterSqlSessionFactory")
+    public SqlSessionFactoryBean sqlSessionFactoryBean(@Qualifier("clusterDataSource")DruidDataSource dataSource) throws Exception {
 
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setTypeAliasesPackage("com.videonet.domain");
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.videonet.cdomain");
         return sqlSessionFactoryBean;
     }
 
-    @Bean(name = "masterTransactionManager")
-    @Primary
-    public DataSourceTransactionManager testTransactionManager(@Qualifier("masterDataSource") DataSource dataSource) {
+    @Bean(name = "clusterTransactionManager")
+    public DataSourceTransactionManager testTransactionManager(@Qualifier("clusterDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "masterSqlSessionTemplate")
-    @Primary
-    public SqlSessionTemplate masterSqlSessionTemplate(@Qualifier("masterSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+    @Bean(name = "clusterSqlSessionTemplate")
+    public SqlSessionTemplate masterSqlSessionTemplate(@Qualifier("clusterSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
@@ -108,30 +97,5 @@ public class DruidConfiguration {
 //        beanNameAutoProxyCreator.setInterceptorNames("druid-stat-interceptor");
 //        return beanNameAutoProxyCreator;
 //    }
-
-    /**
-     * 监听Spring
-     *  1.定义拦截器
-     *  2.定义切入点
-     *  3.定义通知类
-     * @return
-     */
-    @Bean
-    public DruidStatInterceptor druidStatInterceptor(){
-        return new DruidStatInterceptor();
-    }
-    @Bean
-    public JdkRegexpMethodPointcut druidStatPointcut(){
-        JdkRegexpMethodPointcut druidStatPointcut = new JdkRegexpMethodPointcut();
-        String patterns = "com.videonet.service.*";
-        String patterns2 = "com.videonet.dao.*";
-        String patterns3 = "com.videonet.dcao.*";
-        druidStatPointcut.setPatterns(patterns,patterns2,patterns3);
-        return druidStatPointcut;
-    }
-    @Bean
-    public Advisor druidStatAdvisor() {
-        return new DefaultPointcutAdvisor(druidStatPointcut(), druidStatInterceptor());
-    }
 
 }

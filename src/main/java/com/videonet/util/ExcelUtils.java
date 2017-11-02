@@ -159,10 +159,10 @@ public class ExcelUtils {
     }
 
 
-    public static void main(String[] args) throws IOException {
-
-
-        System.out.println(ExcelUtils.readExcel("C:/Users/dell/Desktop/2.xlsx"));
-    }
+//    public static void main(String[] args) throws IOException {
+//
+//
+//        System.out.println(ExcelUtils.readExcel("C:/Users/dell/Desktop/2.xlsx"));
+//    }
 }
 
