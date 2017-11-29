@@ -20,6 +20,8 @@ public interface SysAccountService {
 	List<SysAccount> queryList(Map<String, Object> map);
 	
 	void save(SysAccount sysAccount);
+
+	void saveAll(List<SysAccount> accounts);
 	
 	void update(SysAccount sysAccount);
 	

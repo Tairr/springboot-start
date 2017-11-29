@@ -1,13 +1,10 @@
 package com.videonet.comm.aop;
 
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
+import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -25,7 +22,7 @@ import java.util.Map;
 @Aspect
 public class WebControllerAop {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = Logger.getLogger(this.getClass());
 
     //匹配com.zkn.learnspringboot.web.controller包及其子包下的所有类的所有方法
     @Pointcut("execution(* com.videonet.controller.*.*(..))")

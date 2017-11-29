@@ -3,6 +3,7 @@ package com.videonet.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.videonet.comm.aop.LoggerAdvice;
 import com.videonet.service.TblDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,6 +74,7 @@ public class SysRoleController {
 	 * 列表-包含角色权限信息
 	 */
 	@RequestMapping("/listTree")
+	@LoggerAdvice(description="用户资源权限树")
 	public ReturnMap getCameraTree(@RequestParam Map<String, Object> params){
 		//查询列表数据
 

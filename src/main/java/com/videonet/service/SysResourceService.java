@@ -1,6 +1,7 @@
 package com.videonet.service;
 
 import com.videonet.domain.SysResource;
+import com.videonet.model.ResourceModel;
 
 import java.util.List;
 import java.util.Map;
@@ -29,4 +30,6 @@ public interface SysResourceService {
     int queryTotal(Map<String, Object> map);
 
 	List<SysResource> getAccountAuthorities(String username);
+
+	List<ResourceModel> queryAllSim();
 }

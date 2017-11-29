@@ -1,6 +1,8 @@
 package com.videonet;
 
 
+import org.apache.log4j.Logger;
+
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -16,6 +18,8 @@ public class TestModel {
         System.out.println((date.getTime()));
         date.set(Calendar.DAY_OF_WEEK,Calendar.SATURDAY);
         System.out.println((date.getTime()));
+
+        Logger.getLogger(TestModel.class);
     }
 
 }

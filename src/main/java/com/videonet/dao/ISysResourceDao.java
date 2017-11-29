@@ -4,6 +4,7 @@ import com.videonet.domain.SysAuthority;
 import com.videonet.domain.SysResource;
 import com.videonet.comm.base.BaseModel;
 
+import com.videonet.model.ResourceModel;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -71,6 +72,9 @@ public interface ISysResourceDao  {
 
     @Select("select * from sys_resource")
     List<SysResource> queryForAllObject(BaseModel baseModel);
+
+    @Select("select resource_name as name,type,url from sys_resource")
+    List<ResourceModel> queryAllSimObject();
 
     @Insert("<script>INSERT INTO sys_resource (id,resource_name,description,type,parent_id,parent_name,app_name,url,level,is_menuleaf,create_time,update_time,ifuse,order_num) values "
             +"(#{id},#{resource_name},#{description},#{type},#{parent_id},#{parent_name},#{app_name},#{url},#{level},#{is_menuleaf},#{create_time},#{update_time},#{ifuse},#{order_num})</script>")

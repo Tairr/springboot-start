@@ -6,6 +6,9 @@ import java.util.Map;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.videonet.comm.aop.LoggerAdvice;
+import com.videonet.domain.SysResource;
+import com.videonet.model.ResourceModel;
+import com.videonet.service.SysResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +39,10 @@ public class SysAccountController {
 
 	@Autowired
 	private SysAccountService sysAccountService;
+	@Autowired
+	private SysResourceService sysResourceService;
+
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -116,5 +123,13 @@ public class SysAccountController {
 		
 		return ReturnMap.ok();
 	}
-	
+
+	@RequestMapping("/test")
+	public ReturnMap test(@RequestParam Map<String, Object> params){
+		//查询列表数据
+		//List<ResourceModel> list = sysResourceService.queryAllSim();
+		List<SysResource> list = sysResourceService.getAccountAuthorities("admin");
+		return ReturnMap.ok().put("list", list);
+	}
+
 }

@@ -2,6 +2,7 @@ package com.videonet.service.impl;
 
 import com.videonet.dao.ISysResourceDao;
 import com.videonet.domain.SysAuthority;
+import com.videonet.model.ResourceModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +58,10 @@ public class SysResourceServiceImpl implements SysResourceService {
 	@Override
 	public List<SysResource> getAccountAuthorities(String username){
 		return sysResourceDao.getAccountAuthorities(username);
+	}
+
+	@Override
+	public List<ResourceModel> queryAllSim(){
+		return sysResourceDao.queryAllSimObject();
 	}
 }

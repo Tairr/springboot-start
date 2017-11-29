@@ -5,6 +5,7 @@ import com.videonet.comm.base.BaseModel;
 
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -130,6 +131,6 @@ public interface ISysAccountDao  {
     }
 
     @SelectProvider(type=ISysAccountDao.class,method = "testProvider")
-    List testQuery(@Param("username")String username);
-	
+    List<SysAccount> testQuery(@Param("username")String username);
+
 }

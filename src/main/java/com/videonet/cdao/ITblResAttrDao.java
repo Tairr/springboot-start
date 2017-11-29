@@ -167,6 +167,12 @@ public interface ITblResAttrDao  {
             +"(#{autoid},#{resid},#{resname},#{domainid},#{groupid},#{proxyid},#{longitude},#{latitude},#{polygon},#{geometytype},#{restype},#{ressubtype},#{panangle},#{tiltangle},#{comments},#{matrixcamid},#{resourcetype},#{sipdeviceid},#{parentsipid},#{manufacturer},#{model},#{owner},#{civilcode},#{address},#{parental},#{parentid},#{registerway},#{certnum},#{certifiable},#{errcode},#{endtime},#{secrecy},#{safetyway},#{block},#{sippassword},#{ifonline},#{sipip},#{sipport},#{priorityprotocol},#{devicetime},#{record},#{status},#{encode},#{firmware})</script>")
     void save(TblResAttr tblResAttr);
 
+    @Insert("INSERT INTO tbl_res_attr (deviceId,name) values (#{deviceId},#{name})")
+    void tSave(TblResAttr tblResAttr);
+
+    @Select("select resid from tbl_res_attr where deviceID=#{deviceID}  ")
+    void tGet(String deviceID);
+
     @Update("<script>UPDATE tbl_res_attr set autoid=#{autoid},resid=#{resid},resname=#{resname},domainid=#{domainid},groupid=#{groupid},proxyid=#{proxyid},longitude=#{longitude},latitude=#{latitude},polygon=#{polygon},geometytype=#{geometytype},restype=#{restype},ressubtype=#{ressubtype},panangle=#{panangle},tiltangle=#{tiltangle},comments=#{comments},matrixcamid=#{matrixcamid},resourcetype=#{resourcetype},sipdeviceid=#{sipdeviceid},parentsipid=#{parentsipid},manufacturer=#{manufacturer},model=#{model},owner=#{owner},civilcode=#{civilcode},address=#{address},parental=#{parental},parentid=#{parentid},registerway=#{registerway},certnum=#{certnum},certifiable=#{certifiable},errcode=#{errcode},endtime=#{endtime},secrecy=#{secrecy},safetyway=#{safetyway},block=#{block},sippassword=#{sippassword},ifonline=#{ifonline},sipip=#{sipip},sipport=#{sipport},priorityprotocol=#{priorityprotocol},devicetime=#{devicetime},record=#{record},status=#{status},encode=#{encode},firmware=#{firmware} where autoid =#{autoid}</script>")
     void update(TblResAttr tblResAttr);
 
