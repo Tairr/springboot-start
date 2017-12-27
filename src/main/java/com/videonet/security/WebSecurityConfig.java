@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/sysaccount/register").permitAll() // 所有 /ac/signup 的POST请求 都放行
-                .antMatchers("/druid/**","/druid2/**","/sysaccount/**","/sysrole/**").permitAll() // 所有 /druid 的请求 都放行
+                .antMatchers("/druid/**","/druid2/**","/sysaccount/**","/sysrole/**","/test/**").permitAll() // 所有 /druid 的请求 都放行
                 .anyRequest().authenticated()  // 所有请求需要身份认证
                 .and()
       //          .authenticationProvider(daoAuthenticationProvider())
